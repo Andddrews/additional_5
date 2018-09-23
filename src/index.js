@@ -1,73 +1,27 @@
 module.exports = function check(str, bracketsConfig) {
- bracketsConfig = {'(': ')', '{': '}', '[': ']', '|': '|'};
-  
+   
   var arr = str.split('');
+  var result = true;
 
-  for (i=0; i<=arr.length; i++) {
-      var a = -1;
-      var b = -1;
-      var a = arr.indexOf( "(", 0 );
-      var b = arr.indexOf( ")", 0 );
-      if (a >= 0 && b>=0) {
-        arr.splice (a, 1);
-        arr.splice (b, 1);
-      } else {
-        return false;
-      }
-      if (a===-1 || b===-1) {
-        return true;
-      }
-  }
-var arr = str.split('');
-  for (i=0; i<=arr.length; i++) {
+  while (arr.length && result) {
     var a = -1;
-    var b = -1;
-    var a = arr.indexOf( "{", 0 );
-    var b = arr.indexOf( "}", 0 );
-    if (a >= 0 && b>=0) {
-      arr.splice (a, 1);
-      arr.splice (b, 1);
-    } else {
-      return false;
+    for (var i=0; i<arr.length-1; i++) {
+      for (var j=0; j<bracketsConfig.length; j++) {
+        if (arr[i] === bracketsConfig [j][0] && arr[i+1] === bracketsConfig [j][1] ) {
+          a = i;
+        }
+      }  
     }
-    if (a===-1 || b===-1) {
-      return true;
+
+    if (a === -1) {
+      result = false;
+    } else {
+      arr.splice (a, 2);
     }
     
   }
-  var arr = str.split('');
-  for (i=0; i<=arr.length; i++) {
-    var a = -1;
-    var b = -1;
-    var a = arr.indexOf( "[", 0 );
-    var b = arr.indexOf( "]", 0 );
-    if (a >= 0 && b>=0) {
-      arr.splice (a, 1);
-      arr.splice (b, 1);
-    } else {
-      return false;
-    }
-    if (a===-1 || b===-1) {
-      return true;
-    }
-}
-
-var arr = str.split('');
-for (i=0; i<=arr.length; i++) {
-  var a = -1;
-  var b = -1;
-  var a = arr.indexOf( "|", 0 );
-  var b = arr.indexOf( "|", 0 );
-  if (a >= 0 && b>=0) {
-    arr.splice (a, 1);
-    arr.splice (b, 1);
-  } else {
-    return false;
-  }
-  if (a===-1 || b===-1) {
-    return true;
-  }
-}
+  
+  return result;
 
 }
 
